@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 import org.eclipse.jetty.websocket.api.Session;
 
 /** Web socket class: DO NOT MODIFY.
+ *
  * @author Shirish Singh
  *
  */
