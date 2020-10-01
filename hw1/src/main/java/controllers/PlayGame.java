@@ -11,7 +11,7 @@ import models.Move;
 import models.Player;
 import org.eclipse.jetty.websocket.api.Session;
 
-class PlayGame {
+public class PlayGame {
 
   private static final int PORT_NUMBER = 8080;
 
@@ -36,11 +36,6 @@ class PlayGame {
       ctx.result(ctx.body());
     });
 
-    // Hello test
-    app.get("/hello", ctx -> {
-      ctx.result("Hello ASE class Fall 2020.");
-    });
-
     // Get a new game
     app.get("/newgame", ctx -> {
       ctx.redirect("tictactoe.html");
@@ -55,7 +50,6 @@ class PlayGame {
       Player p1 = new Player(p1Type, p1Id);
       // Set a new Game board
       gameBoard = new GameBoard(p1);
-      // gameBoard.setGameStarted(true);
       // Return the game board in JSON
       String gameBoardJson = gson.toJson(gameBoard);
       ctx.result(gameBoardJson);
@@ -75,6 +69,8 @@ class PlayGame {
         // Set game start
         gameBoard.setGameStarted(true);
         ctx.redirect("/tictactoe.html?p=2");
+        //String gameBoardJson = gson.toJson(gameBoard);
+        //ctx.result(gameBoardJson);
       } catch (NullPointerException e) {
         ctx.result("Please start a game first!");
       }
@@ -89,7 +85,7 @@ class PlayGame {
       int y = Integer.parseInt(ctx.formParam("y"));
       // Validate the move
       Move move = null;
-      if (playerId % 2 == 1) {
+      if (playerId % 2 != 0) {
         move = new Move(gameBoard.getP1(), x, y);
       } else {
         move = new Move(gameBoard.getP2(), x, y);
@@ -100,7 +96,7 @@ class PlayGame {
         return;
       }
       // If is valid, update the game board
-      char state = playerId % 2 == 1 ? gameBoard.getP1().getType() : gameBoard.getP2().getType();
+      char state = playerId % 2 != 0 ? gameBoard.getP1().getType() : gameBoard.getP2().getType();
       gameBoard.setBoardState(x, y, state);
       // Check and set game result
       GameState gameState = checkGameResult(gameBoard.getBoardState());
@@ -120,10 +116,18 @@ class PlayGame {
       ctx.result(gson.toJson(msg));
       sendGameBoardToAllPlayers(gson.toJson(gameBoard));
     });
+    // Get Game Board
+    app.get("/gameboard", ctx -> {
+      // Return the game board in JSON
+      String gameBoardJson = gson.toJson(gameBoard);
+      ctx.result(gameBoardJson);
+    });
 
     // Web sockets - DO NOT DELETE or CHANGE
     app.ws("/gameboard", new UiWebSocket());
   }
+
+
 
   private static GameState checkGameResult(char[][] boardState) {
     // Check all rows

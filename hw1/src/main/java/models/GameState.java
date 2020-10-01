@@ -15,8 +15,4 @@ public enum GameState {
   public int getGameState() {
     return gameState;
   }
-
-  public void setGameState(int gameState) {
-    this.gameState = gameState;
-  }
 }

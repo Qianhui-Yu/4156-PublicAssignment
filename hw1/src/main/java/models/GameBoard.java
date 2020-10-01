@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Arrays;
+
 public class GameBoard {
 
   private Player p1;
@@ -62,7 +64,7 @@ public class GameBoard {
   }
 
   public char[][] getBoardState() {
-    return boardState;
+    return boardState.clone();
   }
 
   public void setBoardState(int x, int y, char state) {
