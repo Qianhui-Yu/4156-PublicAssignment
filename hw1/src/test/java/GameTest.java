@@ -7,6 +7,8 @@ import models.GameBoard;
 import models.Player;
 import org.junit.jupiter.api.*;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -17,7 +19,7 @@ public class GameTest {
    * Runs only once before the testing starts.
    */
   @BeforeAll
-  public static void init() {
+  public static void init() throws SQLException {
     // Start Server
     PlayGame.main(null);
     System.out.println("Before All");

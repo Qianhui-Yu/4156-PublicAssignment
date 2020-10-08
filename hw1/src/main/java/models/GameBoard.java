@@ -18,6 +18,17 @@ public class GameBoard {
 
   private boolean isDraw;
 
+  /** Construct and initialize the GameBoard without Player.
+   *
+   */
+  public GameBoard() {
+    this.gameStarted = false;
+    this.turn = 1;
+    this.boardState = new char[3][3];
+    this.winner = 0;
+    this.isDraw = false;
+  }
+
   /** Construct and initialize the GameBoard with Player1.
    *
    * @param p1 Player
@@ -25,6 +36,21 @@ public class GameBoard {
   public GameBoard(Player p1) {
     this.p1 = p1;
     this.gameStarted = false;
+    this.turn = 1;
+    this.boardState = new char[3][3];
+    this.winner = 0;
+    this.isDraw = false;
+  }
+
+  /** Construct and initialize the GameBoard with Player1 and Player2 and set game as started.
+   *
+   * @param p1 Player1
+   * @param p2 Player2
+   */
+  public GameBoard(Player p1, Player p2) {
+    this.p1 = p1;
+    this.p2 = p2;
+    this.gameStarted = true;
     this.turn = 1;
     this.boardState = new char[3][3];
     this.winner = 0;
